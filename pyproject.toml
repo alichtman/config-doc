@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "shallow-backup"
+version = "2.9a"
+description = "Easily create lightweight backups of installed packages, dotfiles, and more."
+authors = ["Aaron Lichtman <aaronlichtman@gmail.com>"]
+
+license = "MIT"
+readme = 'README.md'
+
+repository = "https://github.com/alichtman/shallow-backup"
+homepage = "https://github.com/alichtman/shallow-backup"
+
+classifiers = [  # Optional
+   'Development Status :: 4 - Beta',
+
+   'Environment :: MacOS X',
+
+   'Intended Audience :: Developers',
+   'Intended Audience :: End Users/Desktop',
+   'Intended Audience :: System Administrators',
+
+   'Topic :: System :: Installation/Setup',
+   'Topic :: System :: Archiving :: Backup',
+   'Topic :: System :: Operating System',
+   'Topic :: Documentation',
+   'Topic :: Utilities',
+
+   'Operating System :: MacOS',
+   'Operating System :: POSIX :: Linux',
+   'Operating System :: Unix',
+
+   'Natural Language :: English',
+
+   'License :: OSI Approved :: MIT License',
+
+   'Programming Language :: Python :: 3',
+   'Programming Language :: Python :: 3.4',
+   'Programming Language :: Python :: 3.5',
+   'Programming Language :: Python :: 3.6',
+   'Programming Language :: Python :: 3.7',
+]
+
+keywords = ['backup', 'dotfiles', 'install', 'configuration']
+
+[tool.poetry.scripts]
+shallow-backup = 'shallow_backup.__main__:cli'
+
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "^7.0"
+inquirer = "^2.6"
+gitpython = "^3.0"
+colorama = "^0.4.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.4"
+pytest-cov = "^2.8"

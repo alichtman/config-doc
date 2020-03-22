@@ -1,18 +1,20 @@
 sudo: false
 language: python
 python:
-  - "3.6"
+  - "3.8"
 git:
   depth: false
 
+before_install:
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - pip install cleo tomlkit jsonschema pyparsing keyring pkginfo cachecontrol cachy html5lib lockfile
+  - source $HOME/.poetry/env
 install:
-  - pip install pipenv
+  - poetry install
   - pip install coveralls
   - pipenv install --dev
-
 script:
   - pytest --cov
-
 after_success:
   - coveralls
 
