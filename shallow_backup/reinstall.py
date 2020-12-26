@@ -104,6 +104,14 @@ def reinstall_configs_sb(configs_path: str, dry_run: bool = False):
 		elif os.path.isfile(source_path):
 			copyfile(source_path, dest_path)
 
+	# reinstall crontab
+	with open(os.path.join(configs_path, "crontab.txt"), "r") as f:
+		for x in f:
+			# the replace sanitizes the crontab line of any present " characters.
+			sanitized = x.replace('"', '\\"')
+			cmd = f"(crontab -l ; echo \"{sanitized}\") | sort - | uniq - | crontab -"
+			run_cmd(cmd)
+
 	print_section_header("CONFIG REINSTALLATION COMPLETED", Fore.BLUE)
 
 

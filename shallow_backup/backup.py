@@ -121,6 +121,11 @@ def backup_configs(backup_path, dry_run: bool = False, skip=False):
 			safe_mkdir(parent_dir)
 			copyfile(config_path, quoted_dest)
 
+	# backup crontab
+	command = "crontab -l"
+	dest = os.path.join(backup_path, "crontab.txt")
+	run_cmd_write_stdout(command, dest)
+
 
 def backup_packages(backup_path, dry_run: bool = False, skip=False):
 	"""
