@@ -138,12 +138,19 @@ def backup_packages(backup_path, dry_run: bool = False, skip=False):
 	if not dry_run:
 		overwrite_dir_prompt_if_needed(backup_path, skip)
 
-	for mgr in ["brew", "brew cask", "gem"]:
-		# deal with package managers that have spaces in them.
-		print_pkg_mgr_backup(mgr)
-		command = f"{mgr} list"
-		dest = f"{backup_path}/{mgr.replace(' ', '-')}_list.txt"
-		run_cmd_if_no_dry_run(command, dest, dry_run)
+	# ruby
+	print_pkg_mgr_backup("gem")
+	command = "gem list"
+	dest = f"{backup_path}/gem_list.txt"
+	run_cmd_if_no_dry_run(command, dest, dry_run)
+
+	# brew
+	print_pkg_mgr_backup("brew")
+	command = f"brew bundle dump --file {backup_path}/brew_list.txt"
+	dest = f"{backup_path}/brew_list.txt"
+	if not dry_run:
+		if not run_cmd(command):
+			print_yellow("brew package manager not found.")
 
 	# cargo
 	print_pkg_mgr_backup("cargo")

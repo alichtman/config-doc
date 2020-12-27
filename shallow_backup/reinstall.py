@@ -124,7 +124,7 @@ def reinstall_packages_sb(packages_path: str, dry_run: bool = False):
 	package_mgrs = set()
 	for file in os.listdir(packages_path):
 		manager = file.split("_")[0].replace("-", " ")
-		if manager in ["gem", "brew-cask", "cargo", "npm", "pip", "pip3", "brew", "vscode", "apm", "macports"]:
+		if manager in ["gem", "cargo", "npm", "pip", "pip3", "brew", "vscode", "apm", "macports"]:
 			package_mgrs.add(file.split("_")[0])
 
 	print_blue_bold("Package Manager Backups Found:")
@@ -135,10 +135,9 @@ def reinstall_packages_sb(packages_path: str, dry_run: bool = False):
 	# TODO: Multithreading for reinstallation.
 	# Construct reinstallation commands and execute them
 	for pm in package_mgrs:
-		if pm in ["brew", "brew-cask"]:
-			pm_formatted = pm.replace("-", " ")
-			print_pkg_mgr_reinstall(pm_formatted)
-			cmd = f"xargs {pm.replace('-', ' ')} install < {packages_path}/{pm_formatted}_list.txt"
+		if pm == "brew":
+			print_pkg_mgr_reinstall(pm)
+			cmd = f"brew bundle install --no-lock --file {packages_path}/brew_list.txt"
 			run_cmd_if_no_dry_run(cmd, dry_run)
 		elif pm == "npm":
 			print_pkg_mgr_reinstall(pm)
